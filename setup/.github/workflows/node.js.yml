@@ -1,5 +1,6 @@
 name: Node.js CI
 
+# Events that triggers the workflow
 on:
   push:
     branches: [main]
@@ -16,9 +17,9 @@ jobs:
         # See supported Node.js release schedule at https://nodejs.org/en/about/releases/
 
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v2 #first we need to checkout the repository
       - name: Use Node.js ${{ matrix.node-version }}
-        uses: actions/setup-node@v2
+        uses: actions/setup-node@v2 #define your environment for javascript
         with:
           node-version: ${{ matrix.node-version }}
           cache: "npm"
