@@ -655,7 +655,7 @@ Asegúrate de seguir los siguientes pasos:
    ejecución con los siguientes comandos:
 
    ```sh
-   $ npm run db:status  # <- Verifica el estado de la base de datos local
+   $ npm run db-status  # <- Verifica el estado de la base de datos local
 
    > chat-app@1.0.0 db:up
    > docker-compose up -d
