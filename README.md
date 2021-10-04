@@ -19,7 +19,6 @@ La mensajería instantánea es uno de los usos más populares que tiene la Inter
 desde que se popularizó su uso. Desde IRC, ICQ y MSN Messenger, a los chats en
 redes sociales, Slack, Telegram y WhatsApp, poder comunicarnos en tiempo real
 con otras personas es algo que ya damos por sentado en nuestra vida cotidiana.
-Holi nuevamente
 
 Muchas herramientas tienen estas funcionalidades para facilitar las
 interacciones diarias en nuestro trabajo, pero además existen chats para
