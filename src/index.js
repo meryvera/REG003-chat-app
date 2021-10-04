@@ -1,1 +1,1 @@
-console.log("Aló")
+console.log("Aló B")
