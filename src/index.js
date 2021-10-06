@@ -8,7 +8,7 @@ app.use(cors())
 
 const io = require('socket.io')(server, {
   cors:{
-    origin: ['*']
+    origin: ['http://localhost:4200']
   }
 })
 
