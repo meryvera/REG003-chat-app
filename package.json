@@ -11,8 +11,9 @@
     "db-down": "docker-compose down"
   },
   "dependencies": {
+    "cors": "^2.8.5",
     "express": "^4.17.1",
-    "socket.io": "^4.1.2"
+    "socket.io": "^4.2.0"
   },
   "devDependencies": {
     "eslint": "^7.30.0",
