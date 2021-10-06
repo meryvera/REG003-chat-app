@@ -1,26 +1,30 @@
 const express = require('express');
+const cors = require('cors');
 const app = express();
-const http = require('http');
+const http = require('http'); 
 const server = http.createServer(app);
-const { Server } = require("socket.io");
-const io = new Server(server);
+
+app.use(cors())
+
+const io = require('socket.io')(server, {
+  cors:{
+    origin: ['*']
+  }
+})
 
 app.get('/', (req, res) => {
-    res.sendFile(__dirname + '/index.html');
+  res.send('<h1>Hello world</h1>');
 });
 
-// This will emit the event to all connected sockets
-// io.emit('some event', { 
-//     someProperty: 'some value', 
-//     otherProperty: 'other value' 
-// }); 
+/* socket */
 io.on('connection', (socket) => {
-     // the server gets it as a chat message event
-    socket.on('chat message', (msg) => {
-        console.log('message: ' + msg);
-        io.emit('chat message', msg);
-    });
-  });
+  console.log('a user connected');
+  // the server gets it as a chat message event
+   socket.on('chat message', (msg) => {
+       console.log('message: ' + msg);
+       io.emit('chat message', msg);
+   });
+});
 
 server.listen(3000, () => {
   console.log('listening on *:3000');
