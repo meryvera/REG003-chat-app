@@ -8,7 +8,8 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "db-up": "docker-compose up -d",
     "db-status": "docker-compose ps",
-    "db-down": "docker-compose down"
+    "db-down": "docker-compose down",
+    "dev": "nodemon index.js"
   },
   "dependencies": {
     "cors": "^2.8.5",
@@ -23,6 +24,7 @@
     "eslint-plugin-import": "^2.23.4",
     "eslint-plugin-md": "^1.0.19",
     "eslint-plugin-prettier": "^3.4.0",
-    "prettier": "^2.3.2"
+    "prettier": "^2.3.2",
+    "nodemon": "^2.0.13"
   }
 }
