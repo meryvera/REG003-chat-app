@@ -1,7 +1,7 @@
 const express = require('express');
 const cors = require('cors');
-const config = require('../global/config');
-const pkg = require('../package.json')
+const config = require('./global/config');
+const pkg = require('./package.json')
 
 const app = express();
 
