@@ -7,6 +7,7 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+//TODO: define fields and relations
 model User {
   id       Int     @id @default(autoincrement())
   email    String  @unique

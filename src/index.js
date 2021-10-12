@@ -1,7 +1,7 @@
 const express = require('express');
 const cors = require('cors');
-const config = require('./global/config');
-const pkg = require('./package.json')
+const config = require('../global/config');
+const pkg = require('../package.json')
 
 const app = express();
 
@@ -28,7 +28,7 @@ const io = require('socket.io')(server, {
 })
 
 app.get('/', (req, res) => {
-  res.send('<h1>Hello world</h1>');
+  res.send({message: 'connect'});
 });
 
 /* socket */
