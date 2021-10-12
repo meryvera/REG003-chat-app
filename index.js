@@ -2,6 +2,10 @@ const express = require('express');
 const cors = require('cors');
 const config = require('./global/config');
 const pkg = require('./package.json')
+const routes = require('./routes');
+const errorHandler = require('./middlewares/errors');
+
+
 
 const app = express();
 
@@ -27,9 +31,18 @@ const io = require('socket.io')(server, {
   }
 })
 
-app.get('/', (req, res) => {
-  res.send('<h1>Hello world</h1>');
-});
+// app.get('/', (req, res) => {
+//   res.send('<h1>Hello world</h1>');
+// });
+
+// app.post('/', (req, res) => {
+//   res.send('finalResponse');
+//   console.log('sd')
+// });
+// app.post('/users', (req, res) => {
+//   res.send('createUser');
+//   console.log('createUser')
+// });
 
 /* socket */
 io.on('connection', (client) => { //on escucha eventos connection, 1 vez que hay respuesta del cb (socket), manejo esas asincronioas
@@ -46,6 +59,17 @@ io.on('connection', (client) => { //on escucha eventos connection, 1 vez que hay
   })
 });
 
-server.listen(portBE, () => {
-  console.log(`App listening on port ${portBE} =D`);
+
+
+// Registrar rutas
+routes(app, (err) => {
+  if (err) {
+    throw err;
+  }
+
+  app.use(errorHandler);
+
+  server.listen(portBE, () => {
+    console.log(`App listening on port ${portBE} =D`);
+  });
 });

@@ -22,7 +22,7 @@ const register = (app, routes, cb) => {
 };
 
 module.exports = (app, next) => register(app, [
-    auth,
+   // auth,
     users,
     root,
 ], next);
