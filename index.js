@@ -1,7 +1,7 @@
 const express = require('express');
 const cors = require('cors');
-const config = require('../global/config');
-const pkg = require('../package.json')
+const config = require('./global/config');
+const pkg = require('./package.json')
 
 const app = express();
 
@@ -17,7 +17,7 @@ app.set('pkg', pkg);
 app.use(cors())
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
-//app.use(authMiddleware(secret)); -ERROR
+// app.use(authMiddleware(secret)); -ERROR
 
 const io = require('socket.io')(server, {
   cors:{
@@ -28,7 +28,7 @@ const io = require('socket.io')(server, {
 })
 
 app.get('/', (req, res) => {
-  res.send({message: 'connect'});
+  res.send('<h1>Hello world</h1>');
 });
 
 /* socket */
@@ -45,10 +45,6 @@ io.on('connection', (client) => { //on escucha eventos connection, 1 vez que hay
     console.log('Usuario desconectado');
   })
 });
-
-// io.on('disconnect', () => {
-//   console.log('Usuario desconectado');
-// });
 
 server.listen(portBE, () => {
   console.log(`App listening on port ${portBE} =D`);
