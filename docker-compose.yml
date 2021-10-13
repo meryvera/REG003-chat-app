@@ -28,3 +28,25 @@ services:
 volumes:
   postgres:
   pgadmin:
+
+# version: '3'
+# services: 
+#   prisma:
+#     image: prismagraphql/prisma:1.8
+#     restart: always
+#     ports:
+#     - 4466:4466
+#     enviroment:
+#       PRISMA_CONFIG:
+#         port: 4466
+#         # uncomment the next line and provide the env vas PRISMA_MANAGEMENT_API_SECRET=mysecret to activate
+#         # managementApiSecret: my-secret
+#         databases:
+#           default:
+#             connector: postgres
+#             database: prisma
+#             host: host.docker.internal
+#             port: 5432
+#             user : postgres
+#             password: postgres
+#             migrations: true
