@@ -8,11 +8,12 @@ const createUser = async (req, resp, next) => {
         const user = await prisma.user.create({
             data: {
                 email: 'vela.kathy@hotmail.com',
+                name: 'Yess',
                 password: 'Tigre123!'
             }
         })
         
-        return user
+        return reso.send(user)
     } catch (error) {
         console.log('línea15:', error);
       if (error) next(error);
