@@ -9,9 +9,33 @@ const createUser = async (req, resp, next) => {
   
   try {
 
+    if(!name || !email || !password) {
+      return resp.status(400).json(
+        {
+          statusCode: 400,
+          message: 'Please, complete all the inputs.',
+        },
+      )
+    }
+
     const salt = bcrypt.genSaltSync();
     const hashedPassword = bcrypt.hashSync(password, salt);
     
+    const oneUser = await prisma.user.findUnique({
+      where: {
+        email,
+      },
+    })
+
+    if(oneUser) {
+      return resp.status(403).json(
+        {
+          statusCode: 403,
+          message: 'This email already exists.',
+        },
+      )
+    }
+
     const newUser = await prisma.user.create({
       data: {
         name,
