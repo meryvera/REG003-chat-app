@@ -31,18 +31,6 @@ const io = require('socket.io')(server, {
   }
 })
 
-// app.get('/', (req, res) => {
-//   res.send('<h1>Hello world</h1>');
-// });
-
-// app.post('/', (req, res) => {
-//   res.send('finalResponse');
-//   console.log('sd')
-// });
-// app.post('/users', (req, res) => {
-//   res.send('createUser');
-//   console.log('createUser')
-// });
 
 /* socket */
 io.on('connection', (client) => { //on escucha eventos connection, 1 vez que hay respuesta del cb (socket), manejo esas asincronioas

@@ -12,11 +12,12 @@ const passwordValidate = body('password').isLength({ min: 8 });
 module.exports = (app, nextMain) => {
 
   app.post('/users', 
-  nameValidate, 
-  emailValidate, 
-  passwordValidate, 
-  middlewareCreateUser, 
-  createUser );
+    nameValidate, 
+    emailValidate, 
+    passwordValidate, 
+    middlewareCreateUser, 
+    createUser 
+  );
 
   return nextMain();
 };
