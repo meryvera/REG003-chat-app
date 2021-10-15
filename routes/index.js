@@ -10,9 +10,7 @@ const root = (app, next) => {
 
     app.post('/', signIn);
 
-    // app.post('/', signInVerify, (req, resp)=>{ 
-    //   return resp.json({ message :'go futbol' })
-    // });
+    app.post('/auth', signInVerify, signIn );
 
     //app.all('*', (req, resp, nextAll) => nextAll(404));
     return next();

@@ -17,7 +17,6 @@ const signIn = async (req, resp, next) => {
               email
             },
         })
-        console.log("Línea 19" , emailUser)
 
         if (!emailUser) {
             return resp.status(404).json({
@@ -31,7 +30,7 @@ const signIn = async (req, resp, next) => {
         // Create a new token with email in the payload
         jwt.sign(
             {
-                uid: emailUser.id,
+                id: emailUser.id,
                 email: emailUser.email,
                 name: emailUser.name
             },
