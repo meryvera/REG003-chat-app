@@ -22,8 +22,8 @@ const register = (app, routes, cb) => {
 };
 
 module.exports = (app, next) => register(app, [
-    auth,
-    users,
-    root,
+  auth,
+  users,
+  root,
 ], next);
   
