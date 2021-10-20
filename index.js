@@ -4,15 +4,11 @@ const config = require('./global/config');
 const pkg = require('./package.json')
 const routes = require('./routes');
 const errorHandler = require('./middlewares/errors');
-
-
-
 const app = express();
-
 const http = require('http'); 
 const server = http.createServer(app);
-
 const { portBE, portFE } = config;
+const socketioJwt = require('socketio-jwt');
 
 app.set('config', config);
 app.set('pkg', pkg);
@@ -31,10 +27,25 @@ const io = require('socket.io')(server, {
   }
 })
 
+io.use(socketioJwt.authorize({
+  secret: config.secret,
+  handshake: true
+}));
+  
+// io.on('connection', (socket) => {
+//   console.log('Nice BackEnd!', socket.decoded_token.name);
+  
+// });
+
 
 /* socket */
+//let currentUsers = 0;
 io.on('connection', (client) => { //on escucha eventos connection, 1 vez que hay respuesta del cb (socket), manejo esas asincronioas
-  console.log('Nuevo usuario conectado' /* + client */);//[object Object]
+  console.log('Nuevo usuario conectado',  client.handshake.headers.authorization );
+  console.log('Nice BackEnd!', client.decoded_token.name);
+ // console.log(client, 'connected Kathy :3');
+
+  //++currentUsers
   // the server gets it as a chat message event
   client.on('sendMessage', (messageInfo) => {
     console.log('message: ' + messageInfo.text); //message: Hola Kathy Angular - recibido desde el FE
@@ -43,11 +54,10 @@ io.on('connection', (client) => { //on escucha eventos connection, 1 vez que hay
   });
 
   client.on('disconnect', () => {
+    //--currentUsers
     console.log('Usuario desconectado');
   })
 });
-
-
 
 // Registrar rutas
 routes(app, (err) => {
