@@ -34,10 +34,15 @@ io.use(socketioJwt.authorize({
 }));
   
 /* socket */
+let connectedUsers=[];
+
 io.on('connection', (client) => { //on escucha eventos connection, 1 vez que hay respuesta del cb (socket), manejo esas asincronioas
   console.log('Nuevo usuario conectado',  client.id);
   console.log('Nice BackEnd!', client.decoded_token.name);
+  connectedUsers.push(client.decoded_token.name);
+  console.log('ES EL ARRAY', connectedUsers);
 
+  client.emit("connectedUsers", connectedUsers)
   //++currentUsers
   // the server gets it as a chat message event
   client.on('sendMessage', (messageInfo) => {
@@ -45,7 +50,7 @@ io.on('connection', (client) => { //on escucha eventos connection, 1 vez que hay
     client.broadcast.emit('receiveMessage', messageInfo); // mandado del BE hacia el FE
   });
 
-  socket.disconnect(client);
+  socket.disconnect(client, connectedUsers);
 });
 
 // Registrar rutas
