@@ -15,14 +15,15 @@ app.set('config', config);
 app.set('pkg', pkg);
 
 // parse application/x-www-form-urlencoded
-app.use(cors())
+app.use(cors());
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
 // app.use(authMiddleware(secret)); -ERROR
 
 const io = require('socket.io')(server, {
   cors:{
-    origin: [portFE],
+    //origin: [portFE],
+    origin: true,
     credentials: true,
     methods: ["GET", "POST"] //son los metodos que usa internamente socke.io
   }
@@ -42,10 +43,11 @@ io.on('connection', (client) => { //on escucha eventos connection, 1 vez que hay
   connectedUsers.push(client.decoded_token.name);
   console.log('ES EL ARRAY', connectedUsers);
 
-  client.emit("connectedUsers", connectedUsers)
+  io.emit("connectedUsers", connectedUsers);
   //++currentUsers
   // the server gets it as a chat message event
   client.on('sendMessage', (messageInfo) => {
+    console.log('desde elk array',connectedUsers)
     console.log('message: ' + messageInfo.text); //message: Hola Kathy Angular - recibido desde el FE
     client.broadcast.emit('receiveMessage', messageInfo); // mandado del BE hacia el FE
   });
