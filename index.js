@@ -31,10 +31,19 @@ const io = require('socket.io')(server, {
   }
 })
 
+io.use(socketioJwt.authorize({
+  secret: config.secret,
+  handshake: true
+}));
+
 
 /* socket */
 io.on('connection', (client) => { //on escucha eventos connection, 1 vez que hay respuesta del cb (socket), manejo esas asincronioas
   console.log('Nuevo usuario conectado' /* + client */);//[object Object]
+  
+  client.broadcast.emit('connectedUsers', client.decoded_token.name
+  ); // mandado del BE hacia el FE
+
   // the server gets it as a chat message event
   client.on('sendMessage', (messageInfo) => {
     console.log('message: ' + messageInfo.text); //message: Hola Kathy Angular - recibido desde el FE
