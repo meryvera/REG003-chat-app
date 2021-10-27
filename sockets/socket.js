@@ -1,16 +1,28 @@
-const socketIO = require('socket.io');
+const disconnect = ( client, connectedUsers, io ) => {
 
-const disconnect = ( client, connectedUsers ) => {
-
-    
   client.on("disconnect", function() {
-    connectedUsers.splice(connectedUsers.indexOf(client.userID), 1);
-    // updateUsernames();
-    // connections.splice(connections.indexOf(client), 1);
-    console.log("disconnected socket", connectedUsers)
-    //io.emit("connectedUsers", connectedUsers);
 
-});
+    // connectedUsers.splice(connectedUsers.indexOf(client.decoded_token.id), 1);
+
+    // console.log("disconnected socket", connectedUsers);
+
+    const idUser = client.decoded_token.id;
+
+    const array = connectedUsers.filter(function(e) {
+
+      return e.userID !== idUser; 
+
+    });
+
+    connectedUsers = array;
+    console.log('raíz modificada', connectedUsers);
+
+    const usersConnectedId = connectedUsers.map(( e )=> e.username);
+    console.log(usersConnectedId);
+
+    io.emit("connectedUsers", usersConnectedId);
+
+  });
 
   
   //connectedUsers.splice(connectedUsers.indexOf(client), 1);

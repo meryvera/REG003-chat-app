@@ -47,7 +47,7 @@ io.on('connection', (client) => { //on escucha eventos connection, 1 vez que hay
   })
 
 
- // console.log('ES EL ARRAY', connectedUsers);
+  console.log('ES EL ARRAY', connectedUsers);
 
   //const usersConnectedId = connectedUsers.map(( e )=> e.userID);
 
@@ -60,10 +60,6 @@ io.on('connection', (client) => { //on escucha eventos connection, 1 vez que hay
   // console.log('Id únicos', uniqueUsersArray);
 
   const userName = client.decoded_token.name;
-
-  const burger = client.decoded_token
-
-  const setCart = [];
 
  // console.log(filteredCategories);
   const arrayVacio = [];
@@ -88,16 +84,8 @@ io.on('connection', (client) => { //on escucha eventos connection, 1 vez que hay
     client.broadcast.emit('receiveMessage', messageInfo); // mandado del BE hacia el FE
   });
 
-  //socket.disconnect(client, connectedUsers);
+  socket.disconnect(client, connectedUsers, io);
   
-  client.on("disconnect", function() {
-    connectedUsers.splice(connectedUsers.indexOf(client.userID), 1);
-    // updateUsernames();
-    // connections.splice(connections.indexOf(client), 1);
-    console.log("disconnected socket", connectedUsers)
-    io.emit("connectedUsers", connectedUsers);
-
-  });
 });
 
 // Registrar rutas
