@@ -7,6 +7,8 @@ const disconnect = ( client, connectedUsers, io ) => {
     // console.log("disconnected socket", connectedUsers);
 
     const idUser = client.decoded_token.id;
+    console.log('connectedUsers', connectedUsers)
+    console.log('idUser', idUser)
 
     const array = connectedUsers.filter(function(e) {
 

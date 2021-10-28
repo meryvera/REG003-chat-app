@@ -35,7 +35,7 @@ io.use(socketioJwt.authorize({
 }));
   
 /* socket */
-const connectedUsers=[];
+let connectedUsers=[];
 
 io.on('connection', (client) => { //on escucha eventos connection, 1 vez que hay respuesta del cb (socket), manejo esas asincronioas
   // console.log('Nuevo usuario conectado',  client.id);
@@ -84,7 +84,33 @@ io.on('connection', (client) => { //on escucha eventos connection, 1 vez que hay
     client.broadcast.emit('receiveMessage', messageInfo); // mandado del BE hacia el FE
   });
 
-  socket.disconnect(client, connectedUsers, io);
+ // socket.disconnect(client, connectedUsers, io);
+
+ client.on("disconnect", function() {
+
+  // connectedUsers.splice(connectedUsers.indexOf(client.decoded_token.id), 1);
+
+  // console.log("disconnected socket", connectedUsers);
+
+  const idUser = client.decoded_token.id;
+  console.log('connectedUsers', connectedUsers)
+  console.log('idUser', idUser)
+
+  const array = connectedUsers.filter(function(e) {
+
+    return e.userID !== idUser; 
+
+  });
+
+  connectedUsers = array;
+  console.log('raíz modificada', connectedUsers);
+
+  const usersConnectedId = connectedUsers.map(( e )=> e.username);
+  console.log(usersConnectedId);
+
+  io.emit("connectedUsers", usersConnectedId);
+
+});
   
 });
 
