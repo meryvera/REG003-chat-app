@@ -38,21 +38,80 @@ io.use(socketioJwt.authorize({
 let connectedUsers=[];
 
 io.on('connection', (client) => { //on escucha eventos connection, 1 vez que hay respuesta del cb (socket), manejo esas asincronioas
-  console.log('Nuevo usuario conectado',  client.id);
-  console.log('Nice BackEnd!', client.decoded_token.name);
-  connectedUsers.push(client.decoded_token.name);
+  // console.log('Nuevo usuario conectado',  client.id);
+  connectedUsers.push({
+    userID: client.decoded_token.id ,
+    username: client.decoded_token.name ,
+    idSocket: client.id,
+    email:client.decoded_token.email ,
+  })
+
+
   console.log('ES EL ARRAY', connectedUsers);
 
-  io.emit("connectedUsers", connectedUsers);
-  //++currentUsers
+  //const usersConnectedId = connectedUsers.map(( e )=> e.userID);
+
+
+  // const uniqueUsers = new Set(usersConnectedId);
+
+  // const uniqueUsersArray = [...uniqueUsers]
+
+
+  // console.log('Id únicos', uniqueUsersArray);
+
+  const userName = client.decoded_token.name;
+
+ // console.log(filteredCategories);
+  const arrayVacio = [];
+  connectedUsers.forEach(category => {
+      if (!arrayVacio.find(cat => cat.userID == category.userID )) {
+          const { userID, username, idSocket, email } = category;
+          arrayVacio.push({ userID, username, idSocket, email});
+      }
+  });
+
+ // console.log('arrayVacio', arrayVacio);
+  const usersConnectedId = arrayVacio.map(( e )=> e.username);
+ // console.log('usersConnectedId', usersConnectedId);
+
+  client.emit("userName", userName);
+
+  io.emit("connectedUsers", usersConnectedId);
+
   // the server gets it as a chat message event
   client.on('sendMessage', (messageInfo) => {
-    console.log('desde elk array',connectedUsers)
-    console.log('message: ' + messageInfo.text); //message: Hola Kathy Angular - recibido desde el FE
+    console.log('message: ' , messageInfo.text , client.decoded_token.name); //message: Hola Kathy Angular - recibido desde el FE
     client.broadcast.emit('receiveMessage', messageInfo); // mandado del BE hacia el FE
   });
 
-  socket.disconnect(client, connectedUsers);
+ // socket.disconnect(client, connectedUsers, io);
+
+ client.on("disconnect", function() {
+
+  // connectedUsers.splice(connectedUsers.indexOf(client.decoded_token.id), 1);
+
+  // console.log("disconnected socket", connectedUsers);
+
+  const idUser = client.decoded_token.id;
+  console.log('connectedUsers', connectedUsers)
+  console.log('idUser', idUser)
+
+  const array = connectedUsers.filter(function(e) {
+
+    return e.userID !== idUser; 
+
+  });
+
+  connectedUsers = array;
+  console.log('raíz modificada', connectedUsers);
+
+  const usersConnectedId = connectedUsers.map(( e )=> e.username);
+  console.log(usersConnectedId);
+
+  io.emit("connectedUsers", usersConnectedId);
+
+});
+  
 });
 
 // Registrar rutas
